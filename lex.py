@@ -41,7 +41,7 @@ t_ignore  = ' \t'
 
 # Error handling rule
 def t_error(t):
-	print("Illegal character '%s'" % t.value[0])
+	print("Illegal character '%s'" , t.value[0])
 	t.lexer.skip(1)
 
 # Build the lexer
@@ -53,14 +53,19 @@ data = '''
 3 + 4 * 10
   + -20 *2
 '''
-teste = input()
-print(type(data))
-# Give the lexer some input
-lexer.input(teste)
 
-# Tokenize
-while True:
-	tok = lexer.token()
-	if not tok: 
-		break      # No more input
-	print(tok.value)
+def main():
+	teste = open('codigo.txt', 'r')
+	codigo = teste.read()
+	print(type(data))
+	# Give the lexer some input
+	lexer.input(codigo)
+
+	# Tokenize
+	while True:
+		tok = lexer.token()
+		if not tok: 
+			break      # No more input
+		print(tok)
+		
+main()
