@@ -33,8 +33,8 @@ def t_NUM(t):
 
 #Expressão regular para id
 def t_ID(t):
-	r'[a-zA-Z_][a-zA-Z]*'
-	if t.value in reserved:# Check for reserved words
+	r'[a-zA-Z][a-zA-Z]*'
+	if t.value in reserved:# Checar por palavras reservadas
 		t.type = reserved[ t.value ]
 	return t
 
@@ -48,16 +48,16 @@ def t_error(t):
 	print("Caracter inválido '%s'" , t.value[0])
 	t.lexer.skip(1)
 
-# Build the lexer
-lexer = lex.lex()
-
 def main():
+	# Build the lexer
+	lexer = lex.lex()
+	
 	teste = open('codigo.txt', 'r')
 	codigo = teste.read()
-	# Give the lexer some input
+	#Passar ao lexer uma entrada
 	lexer.input(codigo)
 
-	# Tokenize
+	#Tokenize
 	while True:
 		tok = lexer.token()
 		if not tok: 
