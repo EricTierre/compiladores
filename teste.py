@@ -62,7 +62,7 @@ def main():
 		tok = lexer.token()
 		if not tok: 
 			break      # No more input
-		print(tok.type)
+		print(tok)
 	
 	'''
 	tok.value : lexema
