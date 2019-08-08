@@ -1,12 +1,16 @@
 import ply.lex as lex
 
+#Palvras reservadas com seus respectivos tokens
 reserved = {
-	'void'	:	'VOID',
-	'int'	:	'INT',
+	'void' : 'VOID',
+	'int' : 'INT',
+	'if' : 'IF',
+	'return' : 'RETURN',
+	'while' : 'WHILE',	
 }
 
 # List of token names.   This is always required
-tokens = ['NUMBER','PLUS','MINUS','TIMES','DIVIDE','LPAREN','RPAREN',
+tokens = ['NUM','PLUS','MINUS','TIMES','DIVIDE','LPAREN','RPAREN',
 	'ID',
 	]+ list(reserved.values())
  
@@ -21,14 +25,15 @@ t_RPAREN  = r'\)'
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
 
-# A regular expression rule with some action code
-def t_NUMBER(t):
-	r'\d+'
+#Expressão regular para número
+def t_NUM(t):
+	r'[0-9][0-9]*'
 	t.value = int(t.value)
 	return t
-	
+
+#Expressão regular para id
 def t_ID(t):
-	r'[a-zA-Z_][a-zA-Z_0-9]*'
+	r'[a-zA-Z_][a-zA-Z]*'
 	if t.value in reserved:# Check for reserved words
 		t.type = reserved[ t.value ]
 	return t
@@ -40,7 +45,7 @@ def t_newline(t):
 
 # Error handling rule
 def t_error(t):
-	print("Illegal character '%s'" , t.value[0])
+	print("Caracter inválido '%s'" , t.value[0])
 	t.lexer.skip(1)
 
 # Build the lexer
