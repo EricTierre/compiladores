@@ -45,7 +45,7 @@ def t_newline(t):
 
 # Error handling rule
 def t_error(t):
-	print("Caracter inválido '%s'" , t.value[0])
+	print('Caracter inválido ' , t.value[0], 'linha ',t.lexer.lineno)
 	t.lexer.skip(1)
 
 def main():
@@ -62,6 +62,12 @@ def main():
 		tok = lexer.token()
 		if not tok: 
 			break      # No more input
-		print(tok)
+		print(tok.type)
+	
+	'''
+	tok.value : lexema
+	tok.lineno : nome do token
+	tok.type : linha
+	'''
 		
 main()
