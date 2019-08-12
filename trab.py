@@ -2,6 +2,10 @@ import ply.lex as lex
 from ply.lex import TOKEN
 from PyQt5 import QtWidgets, uic
 from threading import Thread
+import os
+class teste:
+	def __init__(self,valor):
+		self.v=valor
 
 #Palvras reservadas com seus respectivos tokens
 reserved = {
@@ -54,8 +58,13 @@ def t_error(t):
 	
 def CarregarArquivo():
 	nome_arquivo = dlg.lineEdit.text()
-	arq = open(nome_arquivo, 'r')
-	dlg.campotexto_arquivo.setText(arq.read())
+	if nome_arquivo=="":
+		return
+	try:
+		arq = open(nome_arquivo, 'r')
+		dlg.campotexto_arquivo.setText(arq.read())
+	except:
+		print("Erro ao Abrir arquivo")
 
 def printar(t):
 	texto = 'TOKEN: ' + str(t.type) + ', LEXEMA: ' + str(t.value) +' , linha: ' + str(t.lineno)
@@ -83,14 +92,19 @@ def main():
 		#print(tok.type, end=', ')
 	#print()
 	'''
+def Refresh():
+	dlg.arquivos.clear()
+	arq=os.listdir()
+	for i in arq:
+		dlg.arquivos.append(str(i))
+
 if __name__ == "__main__":
 	app = QtWidgets.QApplication([])
 	dlg = uic.loadUi("teste.ui") #.ui
-	
 	dlg.botao_abrirarquivo.clicked.connect(CarregarArquivo)
 	dlg.botao_lexico.clicked.connect(main)
 	dlg.botao_deletar.clicked.connect(apagar)
-	
+	dlg.refreshbtn.clicked.connect(Refresh)
 	t1 = Thread(target=dlg.show())
 	t2 = Thread(target=app.exec())
 	t1.start()
