@@ -74,15 +74,6 @@ def main():
 	#Tokenize
 	for tok in lexer:
 		printar(tok)
-	'''
-	while True:
-		tok = lexer.token()
-		if not tok: 
-			break      # No more input
-		printar(tok)
-		#print(tok.type, end=', ')
-	#print()
-	'''
 if __name__ == "__main__":
 	app = QtWidgets.QApplication([])
 	dlg = uic.loadUi("teste.ui") #.ui
