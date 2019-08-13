@@ -61,9 +61,9 @@ def CarregarArquivo():
 	if nome_arquivo=="":
 		return
 	try:
-		arq = open(nome/_arquivo, 'r')
+		arq = open(nome_arquivo, 'r')
 		dlg.campotexto_arquivo.setText(arq.read())
-	except:
+	except IOError:
 		print("Erro ao Abrir arquivo")
 
 def printar(t):
@@ -96,7 +96,7 @@ def Refresh():
 	dlg.arquivos.clear()
 	arq=os.listdir()
 	for i in arq:
-		if str(i).find(".txt")>0 or str(i).find(".py")>0 or str(i).find(".c")>0 or str(i).find(".cpp")>0 or str(i).find(".h")>0 or str(i).find(".java")>0:	
+		if str(i).find(".txt")>0 or str(i).find(".py")>0 or str(i).find(".c")>0 or str(i).find(".cpp")>0 or str(i).find(".h")>0 or str(i).find(".java")>0:
 			dlg.arquivos.append(str(i))
 
 if __name__ == "__main__":
