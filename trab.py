@@ -2,6 +2,10 @@ import ply.lex as lex
 from ply.lex import TOKEN
 from PyQt5 import QtWidgets, uic
 from threading import Thread
+import os
+class teste:
+	def __init__(self,valor):
+		self.v=valor
 
 #Palvras reservadas com seus respectivos tokens
 reserved = {
@@ -53,16 +57,21 @@ def t_error(t):
 	t.lexer.skip(1)
 	
 def CarregarArquivo():
-	nome_arquivo = interface.lineEdit.text()
-	arq = open(nome_arquivo, 'r')
-	interface.campotexto_arquivo.setText(arq.read())
+	nome_arquivo = dlg.lineEdit.text()
+	if nome_arquivo=="":
+		return
+	try:
+		arq = open(nome/_arquivo, 'r')
+		dlg.campotexto_arquivo.setText(arq.read())
+	except:
+		print("Erro ao Abrir arquivo")
 
 def printar(t):
 	texto = 'TOKEN: ' + str(t.type) + ', LEXEMA: ' + str(t.value) +' , linha: ' + str(t.lineno)
-	interface.campotexto_lexico.append(texto)
+	dlg.campotexto_lexico.append(texto)
 
 def apagar():
-	interface.campotexto_lexico.clear()
+	dlg.campotexto_lexico.clear()
 	
 def main():
 	# Build the lexer
@@ -70,18 +79,36 @@ def main():
 	lexer = lex.lex()
 
 	#Passar ao lexer uma entrada
-	lexer.input(interface.campotexto_arquivo.toPlainText())
+	lexer.input(dlg.campotexto_arquivo.toPlainText())
 	#Tokenize
 	for tok in lexer:
 		printar(tok)
+	'''
+	while True:
+		tok = lexer.token()
+		if not tok: 
+			break      # No more input
+		printar(tok)
+		#print(tok.type, end=', ')
+	#print()
+	'''
+def Refresh():
+	dlg.arquivos.clear()
+	arq=os.listdir()
+	for i in arq:
+		if str(i).find(".txt")>0 or str(i).find(".py")>0 or str(i).find(".c")>0 or str(i).find(".cpp")>0 or str(i).find(".h")>0 or str(i).find(".java")>0:	
+			dlg.arquivos.append(str(i))
 
 if __name__ == "__main__":
 	app = QtWidgets.QApplication([])
-	interface = uic.loadUi("teste.ui") #.ui
-	
-	interface.botao_abrirarquivo.clicked.connect(CarregarArquivo)
-	interface.botao_lexico.clicked.connect(main)
-	interface.botao_deletar.clicked.connect(apagar)
-	
-	interface.show()
-	app.exec()
+	dlg = uic.loadUi("teste.ui") #.ui
+	dlg.botao_abrirarquivo.clicked.connect(CarregarArquivo)
+	dlg.botao_lexico.clicked.connect(main)
+	dlg.botao_deletar.clicked.connect(apagar)
+	dlg.refreshbtn.clicked.connect(Refresh)
+	t1 = Thread(target=dlg.show())
+	t2 = Thread(target=app.exec())
+	t1.start()
+	t2.start()
+	#dlg.show()
+	#app.exec()
