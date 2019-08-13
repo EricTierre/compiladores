@@ -53,16 +53,16 @@ def t_error(t):
 	t.lexer.skip(1)
 	
 def CarregarArquivo():
-	nome_arquivo = dlg.lineEdit.text()
+	nome_arquivo = interface.lineEdit.text()
 	arq = open(nome_arquivo, 'r')
-	dlg.campotexto_arquivo.setText(arq.read())
+	interface.campotexto_arquivo.setText(arq.read())
 
 def printar(t):
 	texto = 'TOKEN: ' + str(t.type) + ', LEXEMA: ' + str(t.value) +' , linha: ' + str(t.lineno)
-	dlg.campotexto_lexico.append(texto)
+	interface.campotexto_lexico.append(texto)
 
 def apagar():
-	dlg.campotexto_lexico.clear()
+	interface.campotexto_lexico.clear()
 	
 def main():
 	# Build the lexer
@@ -70,21 +70,18 @@ def main():
 	lexer = lex.lex()
 
 	#Passar ao lexer uma entrada
-	lexer.input(dlg.campotexto_arquivo.toPlainText())
+	lexer.input(interface.campotexto_arquivo.toPlainText())
 	#Tokenize
 	for tok in lexer:
 		printar(tok)
+
 if __name__ == "__main__":
 	app = QtWidgets.QApplication([])
-	dlg = uic.loadUi("teste.ui") #.ui
+	interface = uic.loadUi("teste.ui") #.ui
 	
-	dlg.botao_abrirarquivo.clicked.connect(CarregarArquivo)
-	dlg.botao_lexico.clicked.connect(main)
-	dlg.botao_deletar.clicked.connect(apagar)
+	interface.botao_abrirarquivo.clicked.connect(CarregarArquivo)
+	interface.botao_lexico.clicked.connect(main)
+	interface.botao_deletar.clicked.connect(apagar)
 	
-	t1 = Thread(target=dlg.show())
-	t2 = Thread(target=app.exec())
-	t1.start()
-	t2.start()
-	#dlg.show()
-	#app.exec()
+	interface.show()
+	app.exec()
