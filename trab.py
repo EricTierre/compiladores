@@ -3,6 +3,7 @@ from ply.lex import TOKEN
 from PyQt5 import QtWidgets, uic
 from threading import Thread
 import os
+
 class teste:
 	def __init__(self,valor):
 		self.v=valor
@@ -26,12 +27,11 @@ tokens = ['NUM','ID', 'EQUALS', 'MENORI', 'MAIORI', 'DIFFERENT'] + list(reserved
 
 t_ignore_COMMENT = r'/\*'+ r'(\n|.*)*' + r'\*/'
 t_ignore  = ' \t'
+
 t_EQUALS = r'=='
 t_MENORI = r'<='
 t_MAIORI = r'>='
 t_DIFFERENT = r'!='
-
-#t_CLOSECOMMENT = r'*/'
 
 #Expressão regular para número
 def t_NUM(t):
@@ -53,6 +53,8 @@ def t_newline(t):
 
 # Error handling rule
 def t_error(t):
+	invalid = 'Inválido ' + t.value[0] + ', linha: ' + str(t.lineno)
+	dlg.campotexto_lexico.append(invalid)
 	print("Caracter inválido '%s'" , t.value[0])
 	t.lexer.skip(1)
 	
@@ -83,15 +85,7 @@ def main():
 	#Tokenize
 	for tok in lexer:
 		printar(tok)
-	'''
-	while True:
-		tok = lexer.token()
-		if not tok: 
-			break      # No more input
-		printar(tok)
-		#print(tok.type, end=', ')
-	#print()
-	'''
+
 def Refresh():
 	dlg.arquivos.clear()
 	arq=os.listdir()
@@ -102,13 +96,11 @@ def Refresh():
 if __name__ == "__main__":
 	app = QtWidgets.QApplication([])
 	dlg = uic.loadUi("teste.ui") #.ui
+	
 	dlg.botao_abrirarquivo.clicked.connect(CarregarArquivo)
 	dlg.botao_lexico.clicked.connect(main)
 	dlg.botao_deletar.clicked.connect(apagar)
 	dlg.refreshbtn.clicked.connect(Refresh)
-	t1 = Thread(target=dlg.show())
-	t2 = Thread(target=app.exec())
-	t1.start()
-	t2.start()
-	#dlg.show()
-	#app.exec()
+	
+	dlg.show()
+	app.exec()
