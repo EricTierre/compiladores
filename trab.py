@@ -76,8 +76,8 @@ def apagar():
 	dlg.campotexto_lexico.clear()
 	
 def main():
-	# Build the lexer
 	#lexer = lex.lex(debug=1)
+	# Build the lexer
 	lexer = lex.lex()
 
 	#Passar ao lexer uma entrada
