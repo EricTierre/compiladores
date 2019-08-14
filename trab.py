@@ -4,10 +4,6 @@ from PyQt5 import QtWidgets, uic
 from threading import Thread
 import os
 
-class teste:
-	def __init__(self,valor):
-		self.v=valor
-
 #Palvras reservadas com seus respectivos tokens
 reserved = {
 	'void' : 'VOID',
