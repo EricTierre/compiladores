@@ -11,7 +11,7 @@ def Interface():
 	interface.app.exec()
 
 def Lexico():
-	lex = analisador_lex.Executar()
+	lex = analisador_lex.Construir()
 	
 	#Passar ao lexer uma entrada
 	lex.input(interface.janela.campotexto_arquivo.toPlainText())

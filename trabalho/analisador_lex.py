@@ -51,7 +51,7 @@ def t_error(t):
 	interface.janela.campotexto_lexico.insertPlainText(Erro)
 	t.lexer.skip(1)
 			
-def Executar():
+def Construir():
 	#lexer = lex.lex(debug=1)
 	
 	# Build the lexer
