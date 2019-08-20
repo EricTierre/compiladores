@@ -49,6 +49,7 @@ def t_newline(t):
 def t_error(t):
 	Erro = 'Erro: ' + t.value[0] + ', '
 	interface.janela.campotexto_lexico.insertPlainText(Erro)
+	#interface.janela.campotexto_lexico.setText(Erro)
 	t.lexer.skip(1)
 			
 def Construir():

@@ -7,6 +7,9 @@ def Interface():
 	interface.janela.botao_deletar.clicked.connect(interface.apagar)
 	interface.janela.refreshbtn.clicked.connect(interface.Refresh)
 	
+	interface.janela.botao_zoomdown.clicked.connect(interface.ZoomDown)
+	interface.janela.botao_zoomup.clicked.connect(interface.ZoomUp)
+	
 	interface.janela.show()
 	interface.app.exec()
 
