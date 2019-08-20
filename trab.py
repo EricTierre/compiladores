@@ -63,6 +63,13 @@ def CarregarArquivo():
 		dlg.campotexto_arquivo.setText(arq.read())
 	except IOError:
 		print("Erro ao Abrir arquivo")
+		arq = os.listdir()
+		for i in arq:
+			print(str(i),str(i).find(nome_arquivo))
+			if str(i).find(nome_arquivo)>-1:
+				arq = open(str(i), 'r')
+				dlg.campotexto_arquivo.setText(arq.read())
+				break
 
 def printar(t):
 	texto = 'TOKEN: ' + str(t.type) + ', LEXEMA: ' + str(t.value) +' , linha: ' + str(t.lineno)
