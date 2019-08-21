@@ -14,7 +14,7 @@ literals = ['+', '-', '*', '/', '{', '}', '(', ')',
 			'[', ']', '<', '>', '=', ';', ','			
 ]	
 
-# List of token names.   This is always required
+#Lista dos tokens
 tokens = ['NUM','ID', 'EQUALS', 'MENORI', 'MAIORI', 'DIFFERENT'] + list(reserved.values())
 
 t_ignore_COMMENT = r'/\*'+ r'(\n|.*)*' + r'\*/'
@@ -38,27 +38,27 @@ def t_ID(t):
 		t.type = reserved[ t.value ]
 	return t
 
-# Define a rule so we can track line numbers
+#Define a rule so we can track line numbers
 def t_newline(t):
 	r'\n+'
 	t.lexer.lineno += len(t.value)
 
-# Error handling rule
+#Error handling rule
 def t_error(t):
 	print("Caracter inválido: " , t.value[0])
 	t.lexer.skip(1)	
 
 if __name__ == "__main__":
-	#lexer = lex.lex(debug=1)
-	# Build the lexer
+	
+	#Contruir o lexer
 	lexer = lex.lex()
 	
+	#Abrir o arquivo do codigo
 	arquivo = open('codigo.txt', 'r')
 	codigo = arquivo.read()
 
 	#Passar ao lexer uma entrada
 	lexer.input(codigo)
 	
-	#Tokenize
 	for tok in lexer:
 		print(tok.type, end =', ')
