@@ -17,7 +17,8 @@ literals = ['+', '-', '*', '/', '{', '}', '(', ')',
 #Lista dos tokens
 tokens = ['NUM','ID', 'EQUALS', 'MENORI', 'MAIORI', 'DIFFERENT'] + list(reserved.values())
 
-t_ignore_COMMENT = r'/\*'+ r'(\n|.*)*' + r'\*/'
+#t_ignore_COMMENT = r'/\*'+ r'(.*|\n)*' + r'\*/'
+t_ignore_COMMENT = r'/\*'+ r'(.*|\n*)' + r'\*/'
 t_ignore  = ' \t'
 
 t_EQUALS = r'=='
