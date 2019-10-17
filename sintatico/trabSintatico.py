@@ -21,7 +21,7 @@ def p_declaracao(p):
     '''declaracao : declaracao_variaveis
                     | declaracao_funcoes '''
     
-    print('declaracao', p[1])
+    print('declaracao', 'declaracao_variaveis ou declaracao_funcoes')
 
 def p_declaracao_variaveis(p):
     '''declaracao_variaveis : tipo ID ';'
@@ -39,40 +39,51 @@ def p_tipo(p):
 def p_declaracao_funcoes(p):
     '''declaracao_funcoes : tipo ID '(' parametros ')' declaracao_composta '''
     
-    print()
+    print('declaracao_funcoes', 'tipo', p[2], '(', 'parametros', ')', 'declaracao_composta')
     
 def p_parametros(p):
     '''parametros : lista_parametros
                    | VOID '''
-    print()
+    print('parametros', 'lista_parametros ou void')
     
 def p_lista_parametros(p):
     '''lista_parametros : lista_parametros ',' param
                         | param '''
-    
-    print()
+    if len(p) == 4:
+        print('lista_parametros', 'lista_parametros', ',', 'param')
+    else:
+        print('lista_parametros', 'param')
     
 def p_param(p):
     '''param : tipo ID 
               | tipo ID '[' ']' '''
               
-    print()
+    if len(p) == 5:
+        print('param', 'tipo', p[2], '[', ']')
+    else:
+        print('param', 'tipo', p[2])
     
 def p_declaracao_composta(p):
     '''declaracao_composta : '{' declaracao_locais lista_comandos '}' '''
     
-    print()
+    print('declaracao_composta','{','declaracao_locais', 'lista_comandos', '}')
     
 def p_declaracao_locais(p):
     '''declaracao_locais : declaracao_locais declaracao_variaveis
                           | empty '''
-    print()
+    if len(p) == 3:
+        print('declaracao_locais', 'declaracao_locais', 'declaracao_variaveis')
+    else:
+        print('declaracao_locais', 'empty')
     
 def p_lista_comando(p):
     '''lista_comandos : lista_comandos comando
                       | empty '''
                       
-    print()
+    if len(p) == 3:
+        print('lista_comandos', 'lista_comandos', 'comando')
+    else:
+        print('lista_comandos', 'empty')
     
 def p_comando(p):
     '''comando : declaracao_expressao
@@ -80,42 +91,64 @@ def p_comando(p):
                | declaracao_selecao
                | declaracao_iteracao
                | declaracao_retorno'''
-    print()
+    print('comando', 'declaracao_expressao ou declaracao_composta ou declaracao_selecao ou declaracao_iteracao ou declaracao_retorno')
     
 def p_declaracao_expressao(p):
     '''declaracao_expressao : expressao ';'
                             | ';' '''
                             
-    print()
+    if len(p) == 3:
+        print('declaracao_expressao', 'expressao', ';')
+    else:
+        print('declaracao_expressao', ';')
     
 def p_declaracao_selecao(p):
     '''declaracao_selecao : IF '(' expressao ')' comando
                            | IF '(' expressao ')' comando ELSE comando'''
-    print()
+    if len(p) == 6:
+        print('declaracao_selecao', 'IF')
+    else:
+        print('declaracao_selecao', 'IF Else')
     
 def p_declaracao_iteracao(p):
     '''declaracao_iteracao : WHILE '(' expressao ')' comando'''
-    print()
+    
+    print('declaracao_iteracao','WHILE', '(', 'expressao', ')', 'comando')
     
 def p_declaracao_retorno(p):
     '''declaracao_retorno : RETURN ';'
                            | RETURN expressao ';' '''
-    print()
+    
+    if len(p) == 3:
+        print('declaracao_retorno', 'RETURN', ';')
+    else:
+        print('declaracao_retorno', 'RETURN', 'expressao', ';')
     
 def p_expressao(p):
     '''expressao : variavel '=' expressao
                   | expressao_simples'''
-    print()
+    
+    if len(p) == 4:
+        print('expressao', 'variavel', '=', 'expressao')
+    else:
+        print('expressao', 'expressao_simples')
     
 def p_variavel(p):
     '''variavel : ID
                 | ID '[' expressao ']' '''
-    print()
+    
+    if len(p) == 2:
+        print('variavel', p[1])
+    else:
+        print('variavel', p[1], '[', 'expressao', ']')
     
 def p_expressao_simples(p):
     '''expressao_simples : soma_expressao op_relacional soma_expressao
                         | soma_expressao'''
-    print()
+    if len(p) == 4:
+        print('expressao_simples', 'soma_expressao', 'op_relacional', 'soma_expressao')
+    else:
+        print('expressao_simples', 'soma_expressao')
 
 def p_op_relacional(p):
     '''op_relacional : MENORI
@@ -124,61 +157,78 @@ def p_op_relacional(p):
                      | MAIORI
                      | EQUALS
                      | DIFFERENT'''
-    print()
+    print('op_relacional', p[1])
     
 def p_soma_expressao(p):
     '''soma_expressao : soma_expressao soma termo
                        | termo'''
-    print()
+    
+    if len(p) == 4:
+        print('soma_expressao', 'soma_expressao', 'soma', 'termo')
+    else:
+        print('soma_expressao', 'termo')
 
 def p_soma(p):
     '''soma : '+'
             | '-' '''
-    print()
+            
+    print('soma', p[1])
     
 def p_termo(p):
     '''termo : termo mult fator
               | fator'''
-    print()
+              
+    if len(p) == 4:
+        print('termo', 'termo', 'mult', 'fator')
+    else:
+        print('declaracao_expressao', 'fator')
     
 def p_mult(p):
     '''mult : '*'
             | '/' '''
-    print()
+    
+    print('mult', p[1])
     
 def p_fator(p):
     '''fator : '(' expressao ')' 
              | variavel
              | ativacao
              | NUM'''
-    print()
+    
+    if len(p) == 4:
+        print('fator', '(', 'expressao', ')')
+    else:
+        print('fator', 'variavel ou ativacao ou NUM')
     
 def p_ativacao(p):
     '''ativacao : ID '(' argumentos ')' '''
-    print()
+    
+    print('ativacao', p[1], '(', 'argumentos', ')')
     
 def p_argumentos(p):
     '''argumentos : lista_argumentos
                    | empty'''
-    print()
+    
+    print('argumentos', 'lista_argumentos ou empty')
     
 def p_lista_argumentos(p):
     '''lista_argumentos : lista_argumentos ',' expressao
                          | expressao'''
-    print()
     
-# Error rule for syntax errors
+    if len(p) == 4:
+        print('lista_argumentos', 'lista_argumentos', ',', 'expressao')
+    else:
+        print('lista_argumentos', 'expressao')
+    
 def p_error(p):
-    print("Syntax error in input!", p)
-  
-parser = yacc.yacc(start = 'programa')  #build the parser 
- 
-while True:
-   try:
-       s = input('calc > ')
-   except EOFError:
-       break
-   if not s: continue
-   result = parser.parse(s)
-   print(result)
-   
+    print("Erro sintatico!", p) 
+
+if __name__ == "__main__":
+    parser = yacc.yacc(start = 'programa')#Construir o parser
+    
+    #Abrir o arquivo do codigo
+    arquivo = open('codigo.txt', 'r')
+    codigo = arquivo.read()
+        
+    result = parser.parse(codigo)
+    print(result) 
