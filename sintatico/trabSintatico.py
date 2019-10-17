@@ -6,7 +6,7 @@ def p_empty(p):
     pass
 
 def p_programa(p):
-    'programa : lista_declaracoes'
+    '''programa : lista_declaracoes'''
     print('programa', 'lista_declaracoes')
 
 def p_lista_declaracoes(p):
@@ -15,7 +15,7 @@ def p_lista_declaracoes(p):
     if len(p) == 3:
         print('lista_declaracoes', 'lista_declaracoes', 'declaracao')
     else:
-        print('declaracao')
+        print('lista_declaracoes', 'declaracao')
         
 def p_declaracao(p):
     '''declaracao : declaracao_variaveis
@@ -26,7 +26,10 @@ def p_declaracao(p):
 def p_declaracao_variaveis(p):
     '''declaracao_variaveis : tipo ID ';'
                             | tipo ID '[' NUM ']' ';' '''
-    print('declaracao_variaveis', 'tipo')
+    if len(p) == 4:  
+        print('declaracao_variaveis', 'tipo', p[2], ';')
+    else:
+        print('declaracao_variaveis', 'tipo', p[2], '[', p[4], ']', ';')
     
 def p_tipo(p):
     '''tipo : INT
@@ -101,7 +104,7 @@ def p_declaracao_retorno(p):
     
 def p_expressao(p):
     '''expressao : variavel '=' expressao
-                  | expressao_simpes'''
+                  | expressao_simples'''
     print()
     
 def p_variavel(p):
@@ -110,7 +113,7 @@ def p_variavel(p):
     print()
     
 def p_expressao_simples(p):
-    '''expressao_simpes : soma_expressao op_relacional soma_expressao
+    '''expressao_simples : soma_expressao op_relacional soma_expressao
                         | soma_expressao'''
     print()
 
@@ -166,9 +169,9 @@ def p_lista_argumentos(p):
     
 # Error rule for syntax errors
 def p_error(p):
-    print("Syntax error in input!")
+    print("Syntax error in input!", p)
   
-parser = yacc.yacc()  #build the parser 
+parser = yacc.yacc(start = 'programa')  #build the parser 
  
 while True:
    try:
@@ -179,13 +182,3 @@ while True:
    result = parser.parse(s)
    print(result)
    
-'''
-parser = yacc.yacc(start = 'Soma')  #build the parser
-#Abrir o arquivo do codigo
-arquivo = open('soma.txt', 'r')
-codigo = arquivo.read()
-
-#parser.input(codigo)
-
-result = parser.parse(codigo)
-print(result)'''
