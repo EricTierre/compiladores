@@ -12,14 +12,17 @@ def CarregarArquivo():
 		print("Erro ao Abrir arquivo")
 
 def printar(t):
-	#texto = 'TOKEN: ' + str(t.type) + ', LEXEMA: ' + str(t.value) +' , linha: ' + str(t.lineno)
-	#janela.campotexto_lexico.append(texto)
+	texto = 'TOKEN: ' + str(t.type) + ', LEXEMA: ' + str(t.value) +' , linha: ' + str(t.lineno)
+	janela.campotexto_lexico.append(texto)
 	
-	texto = str(t.type) + ', '
-	janela.campotexto_lexico.insertPlainText(texto);
+	#texto = str(t.type) + ', '
+	#janela.campotexto_lexico.insertPlainText(texto);
 
 def apagar():
 	janela.campotexto_lexico.clear()
+    
+def apagar2():
+	janela.campotexto_sintatico.clear()
 	
 def Refresh():
 	janela.arquivos.clear()

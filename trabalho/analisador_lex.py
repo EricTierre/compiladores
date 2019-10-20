@@ -19,7 +19,9 @@ literals = ['+', '-', '*', '/', '{', '}', '(', ')',
 #Lista com os nomes dos tokens
 tokens = ['NUM','ID', 'EQUALS', 'MENORI', 'MAIORI', 'DIFFERENT'] + list(reserved.values())
 
-t_ignore_COMMENT = r'/\*'+ r'(\n|.*)*' + r'\*/'
+#t_ignore_COMMENT = r'/\*'+ r'(.*|\n)*' + r'\*/'
+#t_ignore_COMMENT = r'/\*'+ r'(.*|\n*)' + r'\*/'
+t_ignore_COMMENT = r'(/\*(.|\n)*?\*/)|(//.*)'
 t_ignore  = ' \t'
 
 t_EQUALS = r'=='
@@ -47,16 +49,19 @@ def t_newline(t):
 
 #Error handling rule
 def t_error(t):
-	Erro = 'Erro: ' + t.value[0] + ', '
-	interface.janela.campotexto_lexico.insertPlainText(Erro)
+	#Erro = 'Erro: ' + t.value[0] + ', '
+	#interface.janela.campotexto_lexico.insertPlainText(Erro)
+	
+	Erro = 'Erro: ' + str(t.value[0]) + ', ' + 'Linha: ' + str(t.lineno)
+	interface.janela.campotexto_lexico.append(Erro)
+	
 	#interface.janela.campotexto_lexico.setText(Erro)
 	t.lexer.skip(1)
-			
+
+# Build the lexer
+lexer = lex.lex()			
 def Construir():
 	#lexer = lex.lex(debug=1)
-	
-	# Build the lexer
-	lexer = lex.lex()
-	
+
 	return lexer
 	
