@@ -20,11 +20,11 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Trabalho de Compiladores - Etapa 1</string>
+   <string>Trabalho de Compiladores</string>
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../Desktop/Computação/Programação WEB/ufms.png</normaloff>../Desktop/Computação/Programação WEB/ufms.png</iconset>
+    <normaloff>ufms.png</normaloff>ufms.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background: (181, 181, 181);</string>
@@ -319,13 +319,13 @@ p, li { white-space: pre-wrap; }
      <string>Limpar</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>9</x>
       <y>43</y>
       <width>158</width>
-      <height>21</height>
+      <height>26</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
