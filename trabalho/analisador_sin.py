@@ -27,7 +27,7 @@ def p_lista_declaracoes(p):
                        | declaracao'''
     global last_rule
     if len(p) == 3:
-        regra = 'lista_declaracoes -> lista_declaracoes and declaracao'
+        regra = 'lista_declaracoes -> lista_declaracoes  declaracao'
         regras.append(regra)
     else:
         regra = 'lista_declaracoes -> declaracao'
@@ -49,10 +49,10 @@ def p_declaracao_variaveis(p):
                             | tipo ID '[' NUM ']' ';' '''
     global last_rule
     if len(p) == 4: 
-        regra = 'declaracao_variaveis -> tipo and ' + str(p[2]) + ' and ' + str(p[3])
+        regra = 'declaracao_variaveis -> tipo  ' + str(p[2]) + '  ' + str(p[3])
         regras.append(regra)
     else:
-        regra = 'declaracao_variaveis -> tipo and ' + str(p[2]) + ' and '+ str(p[3]) +' and '+ str(p[4]) +' and '+ str(p[5]) +' and'+ str(p[6])
+        regra = 'declaracao_variaveis -> tipo  ' + str(p[2]) + '  '+ str(p[3]) +'  '+ str(p[4]) +'  '+ str(p[5]) +'  '+ str(p[6])
         regras.append(regra)
     
     last_rule = 'declaracao_variaveis'
@@ -69,7 +69,7 @@ def p_tipo(p):
 def p_declaracao_funcoes(p):
     '''declaracao_funcoes : tipo ID '(' parametros ')' declaracao_composta '''
     global last_rule
-    regra = 'declaracao_funcoes -> tipo and ' + str(p[2]) + ' and ' + str(p[3]) + ' and parametros and ' + str(p[5]) + ' and declaracao_composta'
+    regra = 'declaracao_funcoes -> tipo  ' + str(p[2]) + '  ' + str(p[3]) + '  parametros  ' + str(p[5]) + '  declaracao_composta'
     regras.append(regra)
     
     last_rule = 'declaracao_funcoes'
@@ -92,7 +92,7 @@ def p_lista_parametros(p):
                         | param '''
     global last_rule
     if len(p) == 4:
-        regra = 'lista_parametros -> lista_parametros and ' + str(p[2]) + ' and param'
+        regra = 'lista_parametros -> lista_parametros  ' + str(p[2]) + '  param'
     else:
         regra = 'lista_parametros -> param'
         
@@ -105,9 +105,9 @@ def p_param(p):
               | tipo ID '[' ']' '''
     global last_rule          
     if len(p) == 5:
-        regra = 'param -> tipo and ' + str(p[2]) + ' and ' + str(p[3]) + ' and ' + str(p[4]) 
+        regra = 'param -> tipo  ' + str(p[2]) + '  ' + str(p[3]) + '  ' + str(p[4]) 
     else:
-        regra = 'param -> tipo and ' + str(p[2])
+        regra = 'param -> tipo  ' + str(p[2])
     
     regras.append(regra)
     
@@ -117,7 +117,7 @@ def p_declaracao_composta(p):
     '''declaracao_composta : '{' declaracao_locais lista_comandos '}' '''
     global last_rule
     
-    regra = 'declaracao_composta -> ' + str(p[1]) + ' and declaracao_locais and lista_comandos and ' + str(p[4])
+    regra = 'declaracao_composta -> ' + str(p[1]) + '  declaracao_locais  lista_comandos  ' + str(p[4])
     
     regras.append(regra)
     
@@ -128,7 +128,7 @@ def p_declaracao_locais(p):
                           | empty '''
     global last_rule
     if len(p) == 3:
-        regra = 'declaracao_locais -> declaracao_locais and declaracao_variaveis'
+        regra = 'declaracao_locais -> declaracao_locais  declaracao_variaveis'
     else:
         regra = 'declaracao_locais -> empty'
         
@@ -141,7 +141,7 @@ def p_lista_comando(p):
                       | empty '''
     global last_rule                  
     if len(p) == 3:     
-        regra = 'lista_comandos -> lista_comandos and comando'
+        regra = 'lista_comandos -> lista_comandos  comando'
     else:
         regra = 'lista_comandos -> empty'
         
@@ -167,7 +167,7 @@ def p_declaracao_expressao(p):
                             | ';' '''
     global last_rule                        
     if len(p) == 3:
-        regra = 'declaracao_expressao -> expressao and ' + str(p[2])
+        regra = 'declaracao_expressao -> expressao  ' + str(p[2])
     else:
         regra = 'declaracao_expressao -> ' + str(p[1])
     
@@ -180,9 +180,9 @@ def p_declaracao_selecao(p):
                            | IF '(' expressao ')' comando ELSE comando'''
     global last_rule
     if len(p) == 6:
-        regra = 'declaracao_selecao -> ' + str(p[1]) + ' and ' + str(p[2]) + ' and expressao and ' + str(p[4]) + ' and comando' 
+        regra = 'declaracao_selecao -> ' + str(p[1]) + '  ' + str(p[2]) + '  expressao  ' + str(p[4]) + '  comando' 
     else:
-        regra = 'declaracao_selecao -> ' + str(p[1]) + ' and ' + str(p[2]) + ' and expressao and ' + str(p[4]) + ' and comando and ' + str(p[6]) + ' and comando'
+        regra = 'declaracao_selecao -> ' + str(p[1]) + '  ' + str(p[2]) + '  expressao  ' + str(p[4]) + '  comando  ' + str(p[6]) + '  comando'
     regras.append(regra)
     
     last_rule = 'declaracao_selecao'
@@ -190,7 +190,7 @@ def p_declaracao_selecao(p):
 def p_declaracao_iteracao(p):
     '''declaracao_iteracao : WHILE '(' expressao ')' comando'''
     global last_rule 
-    regra = 'declaracao_iteracao -> ' + str(p[1]) + ' and ' + str(p[2]) + ' and expressao and ' + str(p[4]) + ' and comando'
+    regra = 'declaracao_iteracao -> ' + str(p[1]) + '  ' + str(p[2]) + '  expressao  ' + str(p[4]) + '  comando'
     regras.append(regra)
     
     last_rule = 'declaracao_iteracao'
@@ -200,9 +200,9 @@ def p_declaracao_retorno(p):
                            | RETURN expressao ';' '''
     global last_rule 
     if len(p) == 3:
-        regra = 'declaracao_retorno -> ' + str(p[1]) + ' and ' + str(p[2])
+        regra = 'declaracao_retorno -> ' + str(p[1]) + '  ' + str(p[2])
     else:
-        regra = 'declaracao_retorno -> ' + str(p[1]) + ' and expressao and ' + str(p[3])
+        regra = 'declaracao_retorno -> ' + str(p[1]) + '  expressao  ' + str(p[3])
     
     regras.append(regra)
     
@@ -213,7 +213,7 @@ def p_expressao(p):
                   | expressao_simples'''
     global last_rule 
     if len(p) == 4:
-        regra = 'expressao -> variavel and ' + str(p[2]) + ' and expressao'
+        regra = 'expressao -> variavel  ' + str(p[2]) + '  expressao'
     else:
         regra = 'expressao -> expressao_simples'
     regras.append(regra)
@@ -227,7 +227,7 @@ def p_variavel(p):
     if len(p) == 2:
         regra = 'variavel -> ' + str(p[1])
     else:
-        regra = 'variavel -> ' + str(p[1]) + ' and ' + str(p[2]) + ' and expressao and ' + str(p[4])
+        regra = 'variavel -> ' + str(p[1]) + '  ' + str(p[2]) + '  expressao  ' + str(p[4])
     regras.append(regra)
     
     last_rule = 'variavel'
@@ -237,7 +237,7 @@ def p_expressao_simples(p):
                         | soma_expressao'''
     global last_rule 
     if len(p) == 4:
-        regra = 'expressao_simples -> soma_expressao and op_relacional and soma_expressao'
+        regra = 'expressao_simples -> soma_expressao  op_relacional  soma_expressao'
     else:
         regra = 'expressao_simples -> soma_expressao'
     regras.append(regra)
@@ -262,7 +262,7 @@ def p_soma_expressao(p):
     
     global last_rule 
     if len(p) == 4:
-        regra = 'soma_expressao -> soma_expressao and soma and termo'
+        regra = 'soma_expressao -> soma_expressao  soma  termo'
     else:
         regra = 'soma_expressao -> termo'
     regras.append(regra)
@@ -283,7 +283,7 @@ def p_termo(p):
               | fator'''
     global last_rule           
     if len(p) == 4:
-        regra = 'termo -> termo and mult and fator'
+        regra = 'termo -> termo  mult  fator'
     else:
         regra = 'termo -> fator'
     regras.append(regra)
@@ -306,7 +306,7 @@ def p_fator(p):
              | NUM'''
     global last_rule 
     if len(p) == 4:
-        regra = 'fator -> ' + str(p[1]) + ' and expressao and ' + str(p[3])
+        regra = 'fator -> ' + str(p[1]) + '  expressao  ' + str(p[3])
     elif str(p[1]).isdigit():
         regra = 'fator -> ' + str(p[1])
     else:
@@ -318,7 +318,7 @@ def p_fator(p):
 def p_ativacao(p):
     '''ativacao : ID '(' argumentos ')' '''
     global last_rule 
-    regra = 'ativacao -> ' + str(p[1]) +' and ' + str(p[2]) + ' and argumentos and ' + str(p[4])
+    regra = 'ativacao -> ' + str(p[1]) +'  ' + str(p[2]) + '  argumentos  ' + str(p[4])
     regras.append(regra)
     
     last_rule = 'ativacao'
@@ -337,7 +337,7 @@ def p_lista_argumentos(p):
                          | expressao'''
     global last_rule 
     if len(p) == 4:
-        regra = 'lista_argumentos -> lista_argumentos and ' + str(p[2]) + ' and expressao'
+        regra = 'lista_argumentos -> lista_argumentos  ' + str(p[2]) + '  expressao'
     else:
         regra = 'lista_argumentos -> expressao'
     regras.append(regra)
