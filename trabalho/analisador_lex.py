@@ -19,8 +19,6 @@ literals = ['+', '-', '*', '/', '{', '}', '(', ')',
 #Lista com os nomes dos tokens
 tokens = ['NUM','ID', 'EQUALS', 'MENORI', 'MAIORI', 'DIFFERENT'] + list(reserved.values())
 
-#t_ignore_COMMENT = r'/\*'+ r'(.*|\n)*' + r'\*/'
-#t_ignore_COMMENT = r'/\*'+ r'(.*|\n*)' + r'\*/'
 t_ignore_COMMENT = r'(/\*(.|\n)*?\*/)|(//.*)'
 t_ignore  = ' \t'
 
@@ -59,9 +57,11 @@ def t_error(t):
 	t.lexer.skip(1)
 
 # Build the lexer
-lexer = lex.lex()			
+lexer = lex.lex()
+			
 def Construir():
-	#lexer = lex.lex(debug=1)
-
-	return lexer
+    #lexer = lex.lex(debug=1)
+    # Build the lexer
+    lexer = lex.lex()
+    return lexer
 	

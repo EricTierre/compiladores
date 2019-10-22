@@ -35,8 +35,8 @@ if __name__ == "__main__":
     print('Executando...')
 
     Interface()
-    Lexico()
-    Sintatico()
+    #Lexico()
+    #Sintatico()
 	
 	
 	

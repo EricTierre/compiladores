@@ -351,7 +351,7 @@ def p_error(p):
 
 def Imprimir_Regras():
     for x in range(len(regras)-1, -1, -1):
-        print(regras[x])
+        #print(regras[x])
         interface.janela.campotexto_sintatico.append(regras[x])
     
     regras.clear()
@@ -361,6 +361,7 @@ parser = yacc.yacc(start = 'programa')#Construir o parser
 def Construir():    
     return parser
 
+'''
 if __name__ == "__main__":
     #parser = yacc.yacc(start = 'programa')#Construir o parser
     
@@ -372,3 +373,4 @@ if __name__ == "__main__":
     print()
 
     Imprimir_Regras()
+'''
