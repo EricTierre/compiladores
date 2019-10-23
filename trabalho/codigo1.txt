@@ -1,2 +1,2 @@
 int soma;
-int calc;
+int calc

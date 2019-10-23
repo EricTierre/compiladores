@@ -28,7 +28,7 @@ def Lexico():
 
 def Sintatico():
     sin = analisador_sin.Construir()
-    sin.parse(interface.janela.campotexto_arquivo.toPlainText())
+    sin.parse(interface.janela.campotexto_arquivo.toPlainText(), tracking=True)
     analisador_sin.Imprimir_Regras()
     
 if __name__ == "__main__":

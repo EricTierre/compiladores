@@ -4,7 +4,8 @@ import interface
 
 regras = []
 last_rule = ''
-
+pERRO = None
+    
 def p_empty(p):
     'empty :'
     global last_rule
@@ -12,6 +13,8 @@ def p_empty(p):
     regras.append(regra)
     
     last_rule = 'empty'
+    global pERRO
+    pERRO = p
     pass
 
 def p_programa(p):
@@ -21,6 +24,9 @@ def p_programa(p):
     regras.append(regra)
     
     last_rule = 'programa'
+    #print(pERRO.linespan(0))
+    global pERRO
+    pERRO = p
 
 def p_lista_declaracoes(p):
     '''lista_declaracoes : lista_declaracoes declaracao
@@ -34,7 +40,9 @@ def p_lista_declaracoes(p):
         regras.append(regra)
     
     last_rule = 'lista_declaracoes'
-        
+    global pERRO
+    pERRO = p
+    
 def p_declaracao(p):
     '''declaracao : declaracao_variaveis
                     | declaracao_funcoes '''
@@ -43,7 +51,9 @@ def p_declaracao(p):
     regras.append(regra)
     
     last_rule = 'declaracao'
-
+    global pERRO
+    pERRO = p
+    
 def p_declaracao_variaveis(p):
     '''declaracao_variaveis : tipo ID ';'
                             | tipo ID '[' NUM ']' ';' '''
@@ -56,6 +66,8 @@ def p_declaracao_variaveis(p):
         regras.append(regra)
     
     last_rule = 'declaracao_variaveis'
+    global pERRO
+    pERRO = p
     
 def p_tipo(p):
     '''tipo : INT
@@ -65,7 +77,9 @@ def p_tipo(p):
     regras.append(regra)
     
     last_rule = 'tipo'
-
+    global pERRO
+    pERRO = p
+    
 def p_declaracao_funcoes(p):
     '''declaracao_funcoes : tipo ID '(' parametros ')' declaracao_composta '''
     global last_rule
@@ -73,6 +87,8 @@ def p_declaracao_funcoes(p):
     regras.append(regra)
     
     last_rule = 'declaracao_funcoes'
+    global pERRO
+    pERRO = p
     
 def p_parametros(p):
     '''parametros : lista_parametros
@@ -86,6 +102,8 @@ def p_parametros(p):
     regras.append(regra)
     
     last_rule = 'parametros'
+    global pERRO
+    pERRO = p
     
 def p_lista_parametros(p):
     '''lista_parametros : lista_parametros ',' param
@@ -99,6 +117,8 @@ def p_lista_parametros(p):
     regras.append(regra)
     
     last_rule = 'lista_parametros'
+    global pERRO
+    pERRO = p
     
 def p_param(p):
     '''param : tipo ID 
@@ -112,6 +132,8 @@ def p_param(p):
     regras.append(regra)
     
     last_rule = 'param'
+    global pERRO
+    pERRO = p
     
 def p_declaracao_composta(p):
     '''declaracao_composta : '{' declaracao_locais lista_comandos '}' '''
@@ -122,6 +144,8 @@ def p_declaracao_composta(p):
     regras.append(regra)
     
     last_rule = 'declaracao_composta'
+    global pERRO
+    pERRO = p
     
 def p_declaracao_locais(p):
     '''declaracao_locais : declaracao_locais declaracao_variaveis
@@ -135,6 +159,8 @@ def p_declaracao_locais(p):
     regras.append(regra)
     
     last_rule = 'declaracao_locais'
+    global pERRO
+    pERRO = p
     
 def p_lista_comando(p):
     '''lista_comandos : lista_comandos comando
@@ -148,6 +174,8 @@ def p_lista_comando(p):
     regras.append(regra)
     
     last_rule = 'lista_comandos'
+    global pERRO
+    pERRO = p
     
 def p_comando(p):
     '''comando : declaracao_expressao
@@ -161,6 +189,8 @@ def p_comando(p):
     regras.append(regra)
     
     last_rule = 'comando'
+    global pERRO
+    pERRO = p
     
 def p_declaracao_expressao(p):
     '''declaracao_expressao : expressao ';'
@@ -174,6 +204,8 @@ def p_declaracao_expressao(p):
     regras.append(regra)
     
     last_rule = 'declaracao_expressao'
+    global pERRO
+    pERRO = p
     
 def p_declaracao_selecao(p):
     '''declaracao_selecao : IF '(' expressao ')' comando
@@ -186,6 +218,8 @@ def p_declaracao_selecao(p):
     regras.append(regra)
     
     last_rule = 'declaracao_selecao'
+    global pERRO
+    pERRO = p
     
 def p_declaracao_iteracao(p):
     '''declaracao_iteracao : WHILE '(' expressao ')' comando'''
@@ -194,6 +228,8 @@ def p_declaracao_iteracao(p):
     regras.append(regra)
     
     last_rule = 'declaracao_iteracao'
+    global pERRO
+    pERRO = p
     
 def p_declaracao_retorno(p):
     '''declaracao_retorno : RETURN ';'
@@ -207,6 +243,8 @@ def p_declaracao_retorno(p):
     regras.append(regra)
     
     last_rule = 'declaracao_retorno'
+    global pERRO
+    pERRO = p
     
 def p_expressao(p):
     '''expressao : variavel '=' expressao
@@ -219,6 +257,8 @@ def p_expressao(p):
     regras.append(regra)
     
     last_rule = 'expressao'
+    global pERRO
+    pERRO = p
     
 def p_variavel(p):
     '''variavel : ID
@@ -231,6 +271,8 @@ def p_variavel(p):
     regras.append(regra)
     
     last_rule = 'variavel'
+    global pERRO
+    pERRO = p
     
 def p_expressao_simples(p):
     '''expressao_simples : soma_expressao op_relacional soma_expressao
@@ -243,6 +285,8 @@ def p_expressao_simples(p):
     regras.append(regra)
     
     last_rule = 'expressao_simples'
+    global pERRO
+    pERRO = p
     
 def p_op_relacional(p):
     '''op_relacional : MENORI
@@ -256,6 +300,9 @@ def p_op_relacional(p):
     regras.append(regra)
     
     last_rule = 'op_relacional'
+    global pERRO
+    pERRO = p
+    
 def p_soma_expressao(p):
     '''soma_expressao : soma_expressao soma termo
                        | termo'''
@@ -268,6 +315,8 @@ def p_soma_expressao(p):
     regras.append(regra)
     
     last_rule = 'soma_expressao'
+    global pERRO
+    pERRO = p
     
 def p_soma(p):
     '''soma : '+'
@@ -277,6 +326,8 @@ def p_soma(p):
     regras.append(regra)
     
     last_rule = 'soma'
+    global pERRO
+    pERRO = p
     
 def p_termo(p):
     '''termo : termo mult fator
@@ -289,6 +340,8 @@ def p_termo(p):
     regras.append(regra)
     
     last_rule = 'termo'
+    global pERRO
+    pERRO = p
     
 def p_mult(p):
     '''mult : '*'
@@ -298,6 +351,8 @@ def p_mult(p):
     regras.append(regra)
     
     last_rule = 'mult'
+    global pERRO
+    pERRO = p
     
 def p_fator(p):
     '''fator : '(' expressao ')' 
@@ -314,6 +369,8 @@ def p_fator(p):
     regras.append(regra)
     
     last_rule = 'fator'
+    global pERRO
+    pERRO = p
     
 def p_ativacao(p):
     '''ativacao : ID '(' argumentos ')' '''
@@ -322,6 +379,8 @@ def p_ativacao(p):
     regras.append(regra)
     
     last_rule = 'ativacao'
+    global pERRO
+    pERRO = p
     
 def p_argumentos(p):
     '''argumentos : lista_argumentos
@@ -331,6 +390,8 @@ def p_argumentos(p):
     regras.append(regra)
     
     last_rule = 'argumentos'
+    global pERRO
+    pERRO = p
     
 def p_lista_argumentos(p):
     '''lista_argumentos : lista_argumentos ',' expressao
@@ -343,32 +404,34 @@ def p_lista_argumentos(p):
     regras.append(regra)
     
     last_rule = 'lista_argumentos'
+    global pERRO
+    pERRO = p
     
 def p_error(p):
-    #print('Erro sintatico!', type(p))
-    regra = 'Erro sintatico !'
+    start, end = pERRO.linespan(0)
+    regra = 'Erro sintatico, entre as linhas: ' + str(start) + ' e ' +  str(int(start)+1)
     regras.append(regra)
-
+    
 def Imprimir_Regras():
     for x in range(len(regras)-1, -1, -1):
-        #print(regras[x])
-        interface.janela.campotexto_sintatico.append(regras[x])
+        print(regras[x])
+        #interface.janela.campotexto_sintatico.append(regras[x])
     
     regras.clear()
     
+parser = yacc.yacc(start = 'programa')#Construir o parser    
 def Construir(): 
     parser = yacc.yacc(start = 'programa')#Construir o parser
     return parser
-
 '''
 if __name__ == "__main__":
-    #parser = yacc.yacc(start = 'programa')#Construir o parser
+    parser = yacc.yacc(start = 'programa')#Construir o parser
     
     #Abrir o arquivo do codigo
-    arquivo = open('codigo1.txt', 'r')
+    arquivo = open('codigo.txt', 'r')
     codigo = arquivo.read()
         
-    parser.parse(codigo)
+    parser.parse(codigo, tracking=True)
     print()
 
     Imprimir_Regras()
