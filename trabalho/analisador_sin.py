@@ -1,7 +1,7 @@
 import ply.yacc as yacc
 from analisador_lex import tokens
 import interface
-#p[0]=[p[1],p[2]] 
+
 regras = []
 last_rule = ''
 
