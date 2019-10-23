@@ -356,9 +356,8 @@ def Imprimir_Regras():
     
     regras.clear()
     
-parser = yacc.yacc(start = 'programa')#Construir o parser
-
-def Construir():    
+def Construir(): 
+    parser = yacc.yacc(start = 'programa')#Construir o parser
     return parser
 
 '''

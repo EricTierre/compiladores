@@ -101,7 +101,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Tokens gerados pelo analisador léxico</string>
+       <string>Analisador léxico</string>
       </property>
      </widget>
     </item>
@@ -114,7 +114,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Lex</string>
+       <string>Léxico</string>
       </property>
      </widget>
     </item>
@@ -226,27 +226,7 @@ p, li { white-space: pre-wrap; }
        </font>
       </property>
       <property name="text">
-       <string>Árvore gerada pelo analisador sintático</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="5">
-     <widget class="QPushButton" name="botao_sintatico">
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Sin</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="6">
-     <widget class="QPushButton" name="botao_deletar_2">
-      <property name="text">
-       <string>Limpar</string>
+       <string>Analisador sintático</string>
       </property>
      </widget>
     </item>
@@ -263,6 +243,29 @@ p, li { white-space: pre-wrap; }
        <bool>true</bool>
       </property>
      </widget>
+    </item>
+    <item row="3" column="3">
+     <widget class="QPushButton" name="botao_sintatico">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Sintático</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="4">
+     <widget class="QPushButton" name="botao_deletar_2">
+      <property name="text">
+       <string>Limpar</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="6">
+     <layout class="QVBoxLayout" name="verticalLayout"/>
     </item>
    </layout>
   </widget>
