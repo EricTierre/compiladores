@@ -50,18 +50,13 @@ def t_error(t):
 	#Erro = 'Erro: ' + t.value[0] + ', '
 	#interface.janela.campotexto_lexico.insertPlainText(Erro)
 	
-	Erro = 'Erro: ' + str(t.value[0]) + ', ' + 'Linha: ' + str(t.lineno)
-	interface.janela.campotexto_lexico.append(Erro)
+	Erro = 'Erro Lexico: ' + str(t.value[0]) + ', ' + 'Linha: ' + str(t.lineno)
+	interface.janela.campo_terminal.append(Erro)
 	
 	#interface.janela.campotexto_lexico.setText(Erro)
 	t.lexer.skip(1)
-
-# Build the lexer
-lexer = lex.lex()
-			
+   
 def Construir():
-    #lexer = lex.lex(debug=1)
-    # Build the lexer
-    lexer = lex.lex()
+    lexer = lex.lex()#Construir o lexico
     return lexer
 	

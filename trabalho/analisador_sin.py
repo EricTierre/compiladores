@@ -1,5 +1,6 @@
 import ply.yacc as yacc
 from analisador_lex import tokens
+import analisador_lex
 import interface
 
 regras = []
@@ -24,7 +25,7 @@ def p_programa(p):
     regras.append(regra)
     
     last_rule = 'programa'
-    #print(pERRO.linespan(0))
+
     global pERRO
     pERRO = p
 
@@ -408,24 +409,30 @@ def p_lista_argumentos(p):
     pERRO = p
     
 def p_error(p):
-    start, end = pERRO.linespan(0)
-    regra = 'Erro sintatico, entre as linhas: ' + str(start) + ' e ' +  str(int(start)+1)
-    regras.append(regra)
+    if pERRO != None:
+        start = pERRO.linespan(0)[0]
+        regra = 'Erro sintático, entre as linhas: ' + str(start) + ' e ' +  str(int(start)+1)
+        interface.janela.campo_terminal.append(regra)
     
 def Imprimir_Regras():
     for x in range(len(regras)-1, -1, -1):
-        print(regras[x])
+        #print(regras[x])
         #interface.janela.campotexto_sintatico.append(regras[x])
-    
+        interface.Sintatico.campotexto_sintatico.append(regras[x])
     regras.clear()
-    
-parser = yacc.yacc(start = 'programa')#Construir o parser    
-def Construir(): 
-    parser = yacc.yacc(start = 'programa')#Construir o parser
+
+def Construir():
+    parser = yacc.yacc(start = 'programa')
     return parser
+
+
+
+
+
+
 '''
 if __name__ == "__main__":
-    parser = yacc.yacc(start = 'programa')#Construir o parser
+    parser = yacc.yacc(start = 'programa', debug=False, write_tables=False)#Construir o parser
     
     #Abrir o arquivo do codigo
     arquivo = open('codigo.txt', 'r')

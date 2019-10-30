@@ -1,5 +1,6 @@
 import os
 from PyQt5 import QtWidgets, uic
+from PyQt5.QtWidgets import QFileDialog
 
 def CarregarArquivo():
 	nome_arquivo = janela.lineEdit.text()
@@ -11,26 +12,25 @@ def CarregarArquivo():
 	except IOError:
 		print("Erro ao Abrir arquivo")
 
-def printar(t):
-	texto = 'TOKEN: ' + str(t.type) + ', LEXEMA: ' + str(t.value) +' , linha: ' + str(t.lineno)
-	janela.campotexto_lexico.append(texto)
-	
-	#texto = str(t.type) + ', '
-	#janela.campotexto_lexico.insertPlainText(texto);
+def CarregarArquivoOpenFile():
+    nome_arquivo = QFileDialog.getOpenFileName(None, 'Open File')   
 
-def apagar():
-	janela.campotexto_lexico.clear()
-    
-def apagar2():
-	janela.campotexto_sintatico.clear()
-	
-def Refresh():
-	janela.arquivos.clear()
-	arq=os.listdir()
-	for i in arq:
-		if str(i).find(".txt")>0 or str(i).find(".py")>0 or str(i).find(".c")>0 or str(i).find(".cpp")>0 or str(i).find(".h")>0 or str(i).find(".java")>0:
-			janela.arquivos.append(str(i))
-			
+    if nome_arquivo=="":
+        return
+    try:
+        arq = open(nome_arquivo[0], 'r')
+        janela.campotexto_arquivo.setPlainText(arq.read())
+    except IOError:
+        print("Erro ao Abrir arquivo")
+
+def printar(t):
+    texto = 'TOKEN: ' + str(t.type) + ', LEXEMA: ' + str(t.value) +' , linha: ' + str(t.lineno)
+    #janela.campotexto_lexico.append(texto)
+    Lexico.campotexto_lexico.append(texto)
+       
+    #texto = str(t.type) + ', '
+    #janela.campotexto_lexico.insertPlainText(texto);
+		
 def ZoomUp():
 	janela.campotexto_arquivo.zoomIn(1)
 	
@@ -40,4 +40,6 @@ def ZoomDown():
 
 app = QtWidgets.QApplication([])
 janela = uic.loadUi("Interface.ui") #.ui
+Lexico = uic.loadUi("Analisador_Lexico.ui") #.ui
+Sintatico = uic.loadUi("Analisador_Sintatico.ui") #.ui
 	
