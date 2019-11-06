@@ -35,10 +35,11 @@ def t_NUM(t):
 
 #Expressão regular para id
 def t_ID(t):
-	r'[a-zA-Z][a-zA-Z]*'
-	if t.value in reserved:# Checar por palavras reservadas
-		t.type = reserved[ t.value ]
-	return t
+    r'[a-zA-Z][a-zA-Z]*'
+    if t.value in reserved:# Checar por palavras reservadas
+        t.type = reserved[ t.value ]
+    
+    return t
 
 #Define a rule so we can track line numbers
 def t_newline(t):

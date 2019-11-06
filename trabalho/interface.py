@@ -42,4 +42,6 @@ app = QtWidgets.QApplication([])
 janela = uic.loadUi("Interface.ui") #.ui
 Lexico = uic.loadUi("Analisador_Lexico.ui") #.ui
 Sintatico = uic.loadUi("Analisador_Sintatico.ui") #.ui
+Semantico = uic.loadUi("Analisador_Semantico.ui") #.ui
+Tabela = uic.loadUi("Tabela_Simbolos.ui") #.ui
 	

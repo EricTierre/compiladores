@@ -177,10 +177,12 @@ p, li { white-space: pre-wrap; }
    </widget>
    <widget class="QMenu" name="menuAnalisadores">
     <property name="title">
-     <string>Analisadores</string>
+     <string>Informações</string>
     </property>
     <addaction name="Open_Lexico"/>
     <addaction name="Open_Sintatico"/>
+    <addaction name="Open_Semantico"/>
+    <addaction name="Open_Tabela"/>
    </widget>
    <addaction name="menuArquivo"/>
    <addaction name="menuAnalisadores"/>
@@ -227,12 +229,22 @@ p, li { white-space: pre-wrap; }
   </action>
   <action name="Open_Lexico">
    <property name="text">
-    <string>Léxico</string>
+    <string>Tokens</string>
    </property>
   </action>
   <action name="Open_Sintatico">
    <property name="text">
-    <string>Sintático</string>
+    <string>Árvore Sintática</string>
+   </property>
+  </action>
+  <action name="Open_Semantico">
+   <property name="text">
+    <string>Árvore Anotada</string>
+   </property>
+  </action>
+  <action name="Open_Tabela">
+   <property name="text">
+    <string>Tabela de Símbolos</string>
    </property>
   </action>
  </widget>

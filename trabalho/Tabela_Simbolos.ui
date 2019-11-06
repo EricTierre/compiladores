@@ -9,12 +9,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>629</width>
-    <height>456</height>
+    <width>674</width>
+    <height>487</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Tokens</string>
+   <string>Tabela de Símbolos</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -23,7 +23,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QTextEdit" name="campotexto_lexico">
+     <widget class="QTextEdit" name="campotexto_semantico">
       <property name="font">
        <font>
         <pointsize>14</pointsize>
@@ -53,7 +53,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>629</width>
+     <width>674</width>
      <height>21</height>
     </rect>
    </property>

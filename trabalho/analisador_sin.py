@@ -4,6 +4,7 @@ import analisador_lex
 import interface
 
 regras = []
+regras_anotadas = []
 last_rule = ''
 pERRO = None
     
@@ -20,25 +21,37 @@ def p_empty(p):
 
 def p_programa(p):
     '''programa : lista_declaracoes'''
+    p[0] = p[1]
+    
     global last_rule
-    regra = 'programa -> lista_declaracoes' 
+    regra = 'programa -> lista_declaracoes'
     regras.append(regra)
+    regraAnotada = 'programa.val = ' + str(p[0])
+    regras_anotadas.append(regraAnotada)
     
     last_rule = 'programa'
-
+    
     global pERRO
     pERRO = p
+    #print(str(p[0]), type(str(p[0])))
 
 def p_lista_declaracoes(p):
     '''lista_declaracoes : lista_declaracoes declaracao
                        | declaracao'''
+    
     global last_rule
     if len(p) == 3:
         regra = 'lista_declaracoes -> lista_declaracoes  declaracao'
         regras.append(regra)
+        p[0] = [p[1], p[2]]
+        regraAnotada = 'lista_declaracoes.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     else:
         regra = 'lista_declaracoes -> declaracao'
         regras.append(regra)
+        p[0] = p[1]
+        regraAnotada = 'lista_declaracoes.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     
     last_rule = 'lista_declaracoes'
     global pERRO
@@ -47,9 +60,13 @@ def p_lista_declaracoes(p):
 def p_declaracao(p):
     '''declaracao : declaracao_variaveis
                     | declaracao_funcoes '''
+    p[0] = p[1]
+    
     global last_rule
     regra = 'declaracao -> ' + last_rule
     regras.append(regra)
+    regraAnotada = 'declaracao.val = ' + str(p[0])
+    regras_anotadas.append(regraAnotada)
     
     last_rule = 'declaracao'
     global pERRO
@@ -62,9 +79,15 @@ def p_declaracao_variaveis(p):
     if len(p) == 4: 
         regra = 'declaracao_variaveis -> tipo  ' + str(p[2]) + '  ' + str(p[3])
         regras.append(regra)
+        p[0] = [p[1], p[2], p[3]]
+        regraAnotada = 'declaracao_variaveis.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     else:
         regra = 'declaracao_variaveis -> tipo  ' + str(p[2]) + '  '+ str(p[3]) +'  '+ str(p[4]) +'  '+ str(p[5]) +'  '+ str(p[6])
         regras.append(regra)
+        p[0] = [p[1], p[2], p[3], p[4], p[5], p[6]]
+        regraAnotada = 'declaracao_variaveis.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     
     last_rule = 'declaracao_variaveis'
     global pERRO
@@ -73,9 +96,12 @@ def p_declaracao_variaveis(p):
 def p_tipo(p):
     '''tipo : INT
              | VOID'''
+    p[0] = p[1]
     global last_rule
     regra = 'tipo -> ' + str(p[1])
     regras.append(regra)
+    regraAnotada = 'tipo.val = ' + str(p[0])
+    regras_anotadas.append(regraAnotada)
     
     last_rule = 'tipo'
     global pERRO
@@ -83,9 +109,12 @@ def p_tipo(p):
     
 def p_declaracao_funcoes(p):
     '''declaracao_funcoes : tipo ID '(' parametros ')' declaracao_composta '''
+    p[0] = [p[1], p[2], p[3], p[4], p[5], p[6]]
     global last_rule
     regra = 'declaracao_funcoes -> tipo  ' + str(p[2]) + '  ' + str(p[3]) + '  parametros  ' + str(p[5]) + '  declaracao_composta'
     regras.append(regra)
+    regraAnotada = 'declaracao_funcoes.val = ' + str(p[0])
+    regras_anotadas.append(regraAnotada)
     
     last_rule = 'declaracao_funcoes'
     global pERRO
@@ -94,11 +123,16 @@ def p_declaracao_funcoes(p):
 def p_parametros(p):
     '''parametros : lista_parametros
                    | VOID '''
+    p[0] = p[1]
     global last_rule
     if p[1] == 'void':  
         regra = 'parametros -> ' + str(p[1])
+        regraAnotada = 'parametros.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     else:
         regra = 'parametros -> lista_parametros'
+        regraAnotada = 'parametros.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     
     regras.append(regra)
     
@@ -112,8 +146,14 @@ def p_lista_parametros(p):
     global last_rule
     if len(p) == 4:
         regra = 'lista_parametros -> lista_parametros  ' + str(p[2]) + '  param'
+        p[0] = [p[1], p[2], p[3]]
+        regraAnotada = 'lista_parametros.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     else:
         regra = 'lista_parametros -> param'
+        p[0] = p[1]
+        regraAnotada = 'lista_parametros.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
         
     regras.append(regra)
     
@@ -127,8 +167,14 @@ def p_param(p):
     global last_rule          
     if len(p) == 5:
         regra = 'param -> tipo  ' + str(p[2]) + '  ' + str(p[3]) + '  ' + str(p[4]) 
+        p[0] = [p[1], p[2], p[3], p[4]]
+        regraAnotada = 'param.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     else:
         regra = 'param -> tipo  ' + str(p[2])
+        p[0] = [p[1], p[2]]
+        regraAnotada = 'param.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     
     regras.append(regra)
     
@@ -138,10 +184,12 @@ def p_param(p):
     
 def p_declaracao_composta(p):
     '''declaracao_composta : '{' declaracao_locais lista_comandos '}' '''
+    p[0] = [p[1], p[2], p[3], p[4]]
     global last_rule
     
     regra = 'declaracao_composta -> ' + str(p[1]) + '  declaracao_locais  lista_comandos  ' + str(p[4])
-    
+    regraAnotada = 'declaracao_composta.val = ' + str(p[0])
+    regras_anotadas.append(regraAnotada)
     regras.append(regra)
     
     last_rule = 'declaracao_composta'
@@ -154,8 +202,14 @@ def p_declaracao_locais(p):
     global last_rule
     if len(p) == 3:
         regra = 'declaracao_locais -> declaracao_locais  declaracao_variaveis'
+        p[0] = [p[1], p[2]]
+        regraAnotada = 'declaracao_locais.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     else:
         regra = 'declaracao_locais -> empty'
+        p[0] = p[1]
+        regraAnotada = 'declaracao_locais.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
         
     regras.append(regra)
     
@@ -169,8 +223,14 @@ def p_lista_comando(p):
     global last_rule                  
     if len(p) == 3:     
         regra = 'lista_comandos -> lista_comandos  comando'
+        p[0] = [p[1], p[2]]
+        regraAnotada = 'lista_comandos.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     else:
         regra = 'lista_comandos -> empty'
+        p[0] = p[1]
+        regraAnotada = 'lista_comandos.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
         
     regras.append(regra)
     
@@ -184,9 +244,11 @@ def p_comando(p):
                | declaracao_selecao
                | declaracao_iteracao
                | declaracao_retorno'''
+    p[0] = p[1]
     global last_rule
     regra = 'comando -> ' + last_rule
-        
+    regraAnotada = 'comando.val = ' + str(p[0])
+    regras_anotadas.append(regraAnotada)    
     regras.append(regra)
     
     last_rule = 'comando'
@@ -199,8 +261,14 @@ def p_declaracao_expressao(p):
     global last_rule                        
     if len(p) == 3:
         regra = 'declaracao_expressao -> expressao  ' + str(p[2])
+        p[0] = [p[1], p[2]]
+        regraAnotada = 'declaracao_expressao.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     else:
         regra = 'declaracao_expressao -> ' + str(p[1])
+        p[0] = p[1]
+        regraAnotada = 'declaracao_expressao.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     
     regras.append(regra)
     
@@ -214,8 +282,14 @@ def p_declaracao_selecao(p):
     global last_rule
     if len(p) == 6:
         regra = 'declaracao_selecao -> ' + str(p[1]) + '  ' + str(p[2]) + '  expressao  ' + str(p[4]) + '  comando' 
+        p[0] = [p[1], p[2], p[3], p[4], p[5]]
+        regraAnotada = 'declaracao_selecao.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     else:
         regra = 'declaracao_selecao -> ' + str(p[1]) + '  ' + str(p[2]) + '  expressao  ' + str(p[4]) + '  comando  ' + str(p[6]) + '  comando'
+        p[0] = [p[1], p[2], p[3], p[4], p[5], p[6], p[7]]
+        regraAnotada = 'declaracao_selecao.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     regras.append(regra)
     
     last_rule = 'declaracao_selecao'
@@ -224,9 +298,12 @@ def p_declaracao_selecao(p):
     
 def p_declaracao_iteracao(p):
     '''declaracao_iteracao : WHILE '(' expressao ')' comando'''
+    p[0] = [p[1], p[2], p[3], p[4], p[5]]
     global last_rule 
     regra = 'declaracao_iteracao -> ' + str(p[1]) + '  ' + str(p[2]) + '  expressao  ' + str(p[4]) + '  comando'
     regras.append(regra)
+    regraAnotada = 'declaracao_iteracao.val = ' + str(p[0])
+    regras_anotadas.append(regraAnotada)
     
     last_rule = 'declaracao_iteracao'
     global pERRO
@@ -238,9 +315,14 @@ def p_declaracao_retorno(p):
     global last_rule 
     if len(p) == 3:
         regra = 'declaracao_retorno -> ' + str(p[1]) + '  ' + str(p[2])
+        p[0] = [p[1], p[2]]
+        regraAnotada = 'declaracao_retorno.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     else:
         regra = 'declaracao_retorno -> ' + str(p[1]) + '  expressao  ' + str(p[3])
-    
+        p[0] = [p[1], p[2], p[3]]
+        regraAnotada = 'declaracao_retorno.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     regras.append(regra)
     
     last_rule = 'declaracao_retorno'
@@ -253,8 +335,15 @@ def p_expressao(p):
     global last_rule 
     if len(p) == 4:
         regra = 'expressao -> variavel  ' + str(p[2]) + '  expressao'
+        p[0] = [p[1], p[2], p[3]]
+        regraAnotada = 'expressao.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     else:
         regra = 'expressao -> expressao_simples'
+        p[0] = p[1]
+        regraAnotada = 'expressao.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
+        
     regras.append(regra)
     
     last_rule = 'expressao'
@@ -267,8 +356,14 @@ def p_variavel(p):
     global last_rule 
     if len(p) == 2:
         regra = 'variavel -> ' + str(p[1])
+        p[0] = p[1]
+        regraAnotada = 'variavel.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     else:
         regra = 'variavel -> ' + str(p[1]) + '  ' + str(p[2]) + '  expressao  ' + str(p[4])
+        p[0] = [p[1], p[2], p[3], p[4]]
+        regraAnotada = 'variavel.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     regras.append(regra)
     
     last_rule = 'variavel'
@@ -281,8 +376,14 @@ def p_expressao_simples(p):
     global last_rule 
     if len(p) == 4:
         regra = 'expressao_simples -> soma_expressao  op_relacional  soma_expressao'
+        p[0] = [p[1], p[2], p[3]]
+        regraAnotada = 'expressao_simples.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     else:
         regra = 'expressao_simples -> soma_expressao'
+        p[0] = p[1]
+        regraAnotada = 'expressao_simples.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     regras.append(regra)
     
     last_rule = 'expressao_simples'
@@ -296,9 +397,12 @@ def p_op_relacional(p):
                      | MAIORI
                      | EQUALS
                      | DIFFERENT'''
+    p[0] = p[1]
     global last_rule 
     regra = 'op_relacional -> ' + str(p[1])
     regras.append(regra)
+    regraAnotada = 'op_relacional.val = ' + str(p[0])
+    regras_anotadas.append(regraAnotada)
     
     last_rule = 'op_relacional'
     global pERRO
@@ -311,8 +415,14 @@ def p_soma_expressao(p):
     global last_rule 
     if len(p) == 4:
         regra = 'soma_expressao -> soma_expressao  soma  termo'
+        p[0] = [p[1], p[2], p[3]]
+        regraAnotada = 'soma_expressao.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     else:
         regra = 'soma_expressao -> termo'
+        p[0] = p[1]
+        regraAnotada = 'soma_expressao.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     regras.append(regra)
     
     last_rule = 'soma_expressao'
@@ -322,10 +432,12 @@ def p_soma_expressao(p):
 def p_soma(p):
     '''soma : '+'
             | '-' '''
+    p[0] = p[1]
     global last_rule        
     regra = 'soma -> ' + str(p[1])
     regras.append(regra)
-    
+    regraAnotada = 'soma.val = ' + str(p[0])
+    regras_anotadas.append(regraAnotada)
     last_rule = 'soma'
     global pERRO
     pERRO = p
@@ -336,8 +448,14 @@ def p_termo(p):
     global last_rule           
     if len(p) == 4:
         regra = 'termo -> termo  mult  fator'
+        p[0] = [p[1], p[2], p[3]]
+        regraAnotada = 'termo.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     else:
         regra = 'termo -> fator'
+        p[0] = p[1]
+        regraAnotada = 'termo.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     regras.append(regra)
     
     last_rule = 'termo'
@@ -347,10 +465,12 @@ def p_termo(p):
 def p_mult(p):
     '''mult : '*'
             | '/' '''
+    p[0] = p[1]
     global last_rule 
     regra = 'mult -> ' + str(p[1])
     regras.append(regra)
-    
+    regraAnotada = 'mult.val = ' + str(p[0])
+    regras_anotadas.append(regraAnotada)
     last_rule = 'mult'
     global pERRO
     pERRO = p
@@ -363,10 +483,19 @@ def p_fator(p):
     global last_rule 
     if len(p) == 4:
         regra = 'fator -> ' + str(p[1]) + '  expressao  ' + str(p[3])
+        p[0] = [p[1], p[2], p[3]]
+        regraAnotada = 'fator.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     elif str(p[1]).isdigit():
         regra = 'fator -> ' + str(p[1])
+        p[0] = p[1]
+        regraAnotada = 'fator.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     else:
         regra = 'fator -> ' + last_rule
+        p[0] = p[1]
+        regraAnotada = 'fator.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     regras.append(regra)
     
     last_rule = 'fator'
@@ -375,9 +504,12 @@ def p_fator(p):
     
 def p_ativacao(p):
     '''ativacao : ID '(' argumentos ')' '''
+    p[0] = [p[1], p[2], p[3], p[4]]
     global last_rule 
     regra = 'ativacao -> ' + str(p[1]) +'  ' + str(p[2]) + '  argumentos  ' + str(p[4])
     regras.append(regra)
+    regraAnotada = 'ativacao.val = ' + str(p[0])
+    regras_anotadas.append(regraAnotada)
     
     last_rule = 'ativacao'
     global pERRO
@@ -386,10 +518,12 @@ def p_ativacao(p):
 def p_argumentos(p):
     '''argumentos : lista_argumentos
                    | empty'''
+    p[0] = p[1]
     global last_rule 
     regra = 'argumentos -> ' + last_rule
     regras.append(regra)
-    
+    regraAnotada = 'argumentos.val = ' + str(p[0])
+    regras_anotadas.append(regraAnotada)
     last_rule = 'argumentos'
     global pERRO
     pERRO = p
@@ -400,8 +534,14 @@ def p_lista_argumentos(p):
     global last_rule 
     if len(p) == 4:
         regra = 'lista_argumentos -> lista_argumentos  ' + str(p[2]) + '  expressao'
+        p[0] = [p[1], p[2], p[3]]
+        regraAnotada = 'lista_argumentos.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     else:
         regra = 'lista_argumentos -> expressao'
+        p[0] = p[1]
+        regraAnotada = 'lista_argumentos.val = ' + str(p[0])
+        regras_anotadas.append(regraAnotada)
     regras.append(regra)
     
     last_rule = 'lista_argumentos'
@@ -420,6 +560,11 @@ def Imprimir_Regras():
         #interface.janela.campotexto_sintatico.append(regras[x])
         interface.Sintatico.campotexto_sintatico.append(regras[x])
     regras.clear()
+    
+def Imprimir_Regras_Anotadas():
+    for x in range(len(regras_anotadas)-1, -1, -1):
+        interface.Semantico.campotexto_semantico.append(regras_anotadas[x])
+    regras_anotadas.clear()
 
 def Construir():
     parser = yacc.yacc(start = 'programa')

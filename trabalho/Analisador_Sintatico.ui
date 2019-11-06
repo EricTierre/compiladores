@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Analisador Sintático</string>
+   <string>Árvore Sintática</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -23,19 +23,6 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QPushButton" name="botao_sintatico">
-      <property name="font">
-       <font>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Sintático</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
      <widget class="QTextEdit" name="campotexto_sintatico">
       <property name="font">
        <font>
