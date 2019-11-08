@@ -7,7 +7,11 @@ regras = []
 regras_anotadas = []
 last_rule = ''
 pERRO = None
-    
+contador = 0
+nomes = []
+nomesGlobal = []
+Lista_De_Simbolos = []
+   
 def p_empty(p):
     'empty :'
     global last_rule
@@ -22,7 +26,7 @@ def p_empty(p):
 def p_programa(p):
     '''programa : lista_declaracoes'''
     p[0] = p[1]
-    
+    nomesGlobal.clear()
     global last_rule
     regra = 'programa -> lista_declaracoes'
     regras.append(regra)
@@ -34,6 +38,8 @@ def p_programa(p):
     global pERRO
     pERRO = p
     #print(str(p[0]), type(str(p[0])))
+    print(Lista_De_Simbolos)
+    Lista_De_Simbolos.clear()
 
 def p_lista_declaracoes(p):
     '''lista_declaracoes : lista_declaracoes declaracao
@@ -61,15 +67,22 @@ def p_declaracao(p):
     '''declaracao : declaracao_variaveis
                     | declaracao_funcoes '''
     p[0] = p[1]
-    
+    global pERRO
     global last_rule
     regra = 'declaracao -> ' + last_rule
     regras.append(regra)
     regraAnotada = 'declaracao.val = ' + str(p[0])
     regras_anotadas.append(regraAnotada)
-    
+    if last_rule == 'declaracao_variaveis':       
+        if p[1][1] in nomesGlobal or p[1][1] in nomes:
+            start = pERRO.linespan(0)[0]
+            regra = 'Erro semântico, entre as linhas1: ' + str(start) + ' e ' +  str(int(start)+1)
+            interface.janela.campo_terminal.append(regra)
+        nomesGlobal.append(p[1][1])
+        tupla = str(p[0][1]) + ' ' + str(p[0][0]) + ' ' +  str(id(p[0])) + ' ' +  'Global'
+        Lista_De_Simbolos.append(tupla)
     last_rule = 'declaracao'
-    global pERRO
+    
     pERRO = p
     
 def p_declaracao_variaveis(p):
@@ -82,6 +95,7 @@ def p_declaracao_variaveis(p):
         p[0] = [p[1], p[2], p[3]]
         regraAnotada = 'declaracao_variaveis.val = ' + str(p[0])
         regras_anotadas.append(regraAnotada)
+        
     else:
         regra = 'declaracao_variaveis -> tipo  ' + str(p[2]) + '  '+ str(p[3]) +'  '+ str(p[4]) +'  '+ str(p[5]) +'  '+ str(p[6])
         regras.append(regra)
@@ -109,6 +123,9 @@ def p_tipo(p):
     
 def p_declaracao_funcoes(p):
     '''declaracao_funcoes : tipo ID '(' parametros ')' declaracao_composta '''
+    nomes.clear()
+    global contador
+    contador+=1
     p[0] = [p[1], p[2], p[3], p[4], p[5], p[6]]
     global last_rule
     regra = 'declaracao_funcoes -> tipo  ' + str(p[2]) + '  ' + str(p[3]) + '  parametros  ' + str(p[5]) + '  declaracao_composta'
@@ -199,12 +216,21 @@ def p_declaracao_composta(p):
 def p_declaracao_locais(p):
     '''declaracao_locais : declaracao_locais declaracao_variaveis
                           | empty '''
+    global nomes
+    global pERRO
     global last_rule
     if len(p) == 3:
+        if p[2][1] in nomes or p[2][1] in nomesGlobal:
+            start = pERRO.linespan(0)[0]
+            regra = 'Erro semântico, entre as linhas: ' + str(start) + ' e ' +  str(int(start)+1)
+            interface.janela.campo_terminal.append(regra)
+        nomes.append(p[2][1])
         regra = 'declaracao_locais -> declaracao_locais  declaracao_variaveis'
         p[0] = [p[1], p[2]]
         regraAnotada = 'declaracao_locais.val = ' + str(p[0])
         regras_anotadas.append(regraAnotada)
+        tupla = str(p[2][1]) + ' ' + str(p[2][0]) + ' ' +  str(id(p[0])) + ' ' +  'função ' + str(contador)
+        Lista_De_Simbolos.append(tupla)
     else:
         regra = 'declaracao_locais -> empty'
         p[0] = p[1]
@@ -214,7 +240,7 @@ def p_declaracao_locais(p):
     regras.append(regra)
     
     last_rule = 'declaracao_locais'
-    global pERRO
+    
     pERRO = p
     
 def p_lista_comando(p):
