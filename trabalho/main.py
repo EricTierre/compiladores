@@ -15,6 +15,7 @@ def Interface():
     interface.janela.Open_Tabela.triggered.connect(ShowTab)
     interface.janela.action_Sair.triggered.connect(CloseALL)
     interface.janela.action_Abrir.triggered.connect(OpenFile)
+    interface.janela.action_Salvar.triggered.connect(SaveFile)
     
     interface.janela.botao_zoomdown.clicked.connect(interface.ZoomDown)
     interface.janela.botao_zoomup.clicked.connect(interface.ZoomUp)
@@ -27,6 +28,9 @@ def CloseALL():
 
 def OpenFile():
     interface.CarregarArquivoOpenFile()
+    
+def SaveFile():
+    interface.SalvarArquivo()
     
 def ShowLex():
     interface.Lexico.show()
@@ -55,6 +59,7 @@ def Sintatico():
     interface.Sintatico.campotexto_sintatico.clear()
     interface.Semantico.campotexto_semantico.clear()
     interface.janela.campo_terminal.clear()
+    interface.Tabela.campotexto_tabela.clear()
     
     sin = analisador_sin.Construir()
     sin.parse(interface.janela.campotexto_arquivo.toPlainText(),lexer = analisador_lex.Construir(), tracking=True)

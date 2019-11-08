@@ -173,6 +173,7 @@ p, li { white-space: pre-wrap; }
      <string>Arquivo</string>
     </property>
     <addaction name="action_Abrir"/>
+    <addaction name="action_Salvar"/>
     <addaction name="action_Sair"/>
    </widget>
    <widget class="QMenu" name="menuAnalisadores">
@@ -245,6 +246,11 @@ p, li { white-space: pre-wrap; }
   <action name="Open_Tabela">
    <property name="text">
     <string>Tabela de Símbolos</string>
+   </property>
+  </action>
+  <action name="action_Salvar">
+   <property name="text">
+    <string>Salvar</string>
    </property>
   </action>
  </widget>
