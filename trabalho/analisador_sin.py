@@ -80,7 +80,8 @@ def p_declaracao(p):
     regras.append(regra)
     regraAnotada = 'declaracao.val = ' + str(p[0])
     regras_anotadas.append(regraAnotada)
-    if last_rule == 'declaracao_variaveis':       
+    if last_rule == 'declaracao_variaveis': 
+        print(nomes, nomesGlobal)
         if p[1][1] in nomesGlobal or p[1][1] in nomes:
             start = pERRO.linespan(0)[0]
             regra = 'Erro semântico, entre as linhas: ' + str(start) + ' e ' +  str(int(start)+1) + ' variavies com nomes iguais'
@@ -119,7 +120,7 @@ def p_declaracao_variaveis(p):
     last_rule = 'declaracao_variaveis'
     global pERRO
     pERRO = p
-    
+        
 def p_tipo(p):
     '''tipo : INT
              | VOID'''
@@ -378,24 +379,31 @@ def p_declaracao_retorno(p):
 def p_expressao(p):
     '''expressao : variavel '=' expressao
                   | expressao_simples'''
-    global last_rule 
+    global last_rule
+    global pERRO    
     if len(p) == 4:
         regra = 'expressao -> variavel  ' + str(p[2]) + '  expressao'
         p[0] = [p[1], p[2], p[3]]
         regraAnotada = 'expressao.val = ' + str(p[0])
         regras_anotadas.append(regraAnotada)
+        if p[1][0] in nomes or p[1][0] in nomesGlobal:
+            pass
+        else:
+            start = pERRO.linespan(0)[0]
+            regra = 'Erro semântico, entre as linhas: ' + str(start) + ' e ' +  str(int(start)+1) + ' declarar variável antes de atribuir um valor à ela'
+            interface.janela.campo_terminal.append(regra)
     else:
         regra = 'expressao -> expressao_simples'
         p[0] = p[1]
         regraAnotada = 'expressao.val = ' + str(p[0])
         regras_anotadas.append(regraAnotada)
-        
+   
     regras.append(regra)
     
     last_rule = 'expressao'
-    global pERRO
-    pERRO = p
     
+    pERRO = p
+      
 def p_variavel(p):
     '''variavel : ID
                 | ID '[' expressao ']' '''
