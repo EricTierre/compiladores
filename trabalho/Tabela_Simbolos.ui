@@ -50,13 +50,13 @@ p, li { white-space: pre-wrap; }
      <widget class="QLabel" name="label">
       <property name="font">
        <font>
-        <pointsize>16</pointsize>
+        <pointsize>14</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
       </property>
       <property name="text">
-       <string>Nome                      Tipo                Endereço                 Escopo</string>
+       <string>Nome     Tipo        Categoria      Valor        Endereço           Escopo</string>
       </property>
      </widget>
     </item>

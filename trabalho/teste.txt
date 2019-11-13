@@ -1,0 +1,8 @@
+void main(void){
+    int x; int y;
+    x = 5;
+    y = x - 1;
+    
+    if(7== 5){
+    }
+}

@@ -15,7 +15,8 @@ def Interface():
     interface.janela.Open_Tabela.triggered.connect(ShowTab)
     interface.janela.action_Sair.triggered.connect(CloseALL)
     interface.janela.action_Abrir.triggered.connect(OpenFile)
-    interface.janela.action_Salvar.triggered.connect(SaveFile)
+    interface.janela.action_SalvarComo.triggered.connect(SaveFile)
+    interface.janela.action_Salvar.triggered.connect(SaveFile2)
     
     interface.janela.botao_zoomdown.clicked.connect(interface.ZoomDown)
     interface.janela.botao_zoomup.clicked.connect(interface.ZoomUp)
@@ -31,6 +32,9 @@ def OpenFile():
     
 def SaveFile():
     interface.SalvarArquivo()
+    
+def SaveFile2():
+    interface.SalvarArquivo2()
     
 def ShowLex():
     interface.Lexico.show()

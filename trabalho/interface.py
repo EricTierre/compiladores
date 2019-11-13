@@ -17,7 +17,7 @@ def CarregarArquivo():
 
 def CarregarArquivoOpenFile():
     global nome_arquivo
-    nome_arquivo = QFileDialog.getOpenFileName(None, 'Open File')   
+    nome_arquivo = QFileDialog.getOpenFileName(None)   
 
     if nome_arquivo=="":
         return
@@ -31,6 +31,16 @@ def SalvarArquivo():
     #if nome_arquivo == None:
     #    return
     nome_arquivo = QFileDialog.getSaveFileName(None)
+    try:
+        arq = open(nome_arquivo[0], 'w')
+        arq.write(janela.campotexto_arquivo.toPlainText())
+        arq.close()
+    except IOError:
+        print("Erro ao Abrir arquivo")
+        
+def SalvarArquivo2():
+    if nome_arquivo == None:
+        return
     try:
         arq = open(nome_arquivo[0], 'w')
         arq.write(janela.campotexto_arquivo.toPlainText())
